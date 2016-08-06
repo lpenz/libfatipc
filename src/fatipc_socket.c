@@ -53,6 +53,7 @@ int fatipc_recv(int socket, struct FatipcBuffer* buffer)
     /* mmap */
     void* addr = mmap(NULL, stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
     if (addr == MAP_FAILED) {
+        close(fd);
         return -4;
     }
 
