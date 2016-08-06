@@ -38,16 +38,16 @@ nice and is compatible with this library.
 /* ... */
 
     /* Allocate the buffer, check for error: */
-    struct FatipcBuffer* buff = fatipc_buffer_alloc(50);
-    if (buff == NULL)
+    struct FatipcBuffer buff;
+    if (fatipc_alloc(50, &buff) != 0)
         return -1;
 
     /* Write to it... */
-    memset(buff->data, 0, 50);
+    memset(buff.data, 0, 50);
 
     /* Send it through sock, check error: */
-    if (! fatipc_send(sock, buff)) {
-        fatipc_buffer_free(&buff); /* Have to free it on error */
+    if (fatipc_send(sock, &buff) != 0) {
+        fatipc_free(&buff); /* Have to free it on error */
         return -1;
     }
 
@@ -57,7 +57,7 @@ nice and is compatible with this library.
      */
 
     /* But we have to free the current process' link to it: */
-    fatipc_buffer_free(&buff);
+    fatipc_free(&buff);
 ```
 
 
@@ -73,9 +73,8 @@ nice and is compatible with this library.
      * Receive the buffer.
      * This call blocks if there is no data in the socket.
      */
-    struct FatipcBuffer* buff = fatipc_recv(sock);
-
-    if (buff == NULL)
+    struct FatipcBuffer buff;
+    if (fatipc_recv(sock, &buff) != 0)
         return -1;
 
     /*
@@ -84,7 +83,7 @@ nice and is compatible with this library.
      */
 
     /* After we are done with it, we have to free it: */
-    fatipc_buffer_free(&buff);
+    fatipc_free(&buff);
 ```
 
 

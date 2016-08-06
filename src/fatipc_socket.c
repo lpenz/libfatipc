@@ -18,7 +18,7 @@
 
 #include "fatipc_socket.h"
 
-struct FatipcBuffer* fatipc_recv(int socket)
+int fatipc_recv(int socket, struct FatipcBuffer* buffer)
 {
     /*
      * recv fd through socket, from
@@ -33,9 +33,11 @@ struct FatipcBuffer* fatipc_recv(int socket)
     char c_buffer[256];
     msg.msg_control = c_buffer;
     msg.msg_controllen = sizeof(c_buffer);
+
     if (recvmsg(socket, &msg, 0) < 0) {
-        return NULL;
+        return -1;
     }
+
     struct cmsghdr* cmsg = CMSG_FIRSTHDR(&msg);
     unsigned char* data = CMSG_DATA(cmsg);
 
@@ -45,26 +47,24 @@ struct FatipcBuffer* fatipc_recv(int socket)
     struct stat stat;
     if (fstat(fd, &stat) < 0) {
         close(fd);
-        return NULL;
+        return -3;
     }
 
     /* mmap */
     void* addr = mmap(NULL, stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
     if (addr == MAP_FAILED) {
-        close(fd);
-        return NULL;
+        return -4;
     }
 
     /* alloc and fill up buffer */
-    struct FatipcBuffer* buffer = malloc(sizeof(struct FatipcBuffer));
     buffer->data = addr;
     buffer->size = stat.st_size;
     buffer->fd = fd;
 
-    return buffer;
+    return 0;
 }
 
-bool fatipc_send(int socket, struct FatipcBuffer* buffer)
+int fatipc_send(int socket, struct FatipcBuffer* buffer)
 {
     /*
      * send fd through socket, from
@@ -88,8 +88,8 @@ bool fatipc_send(int socket, struct FatipcBuffer* buffer)
     msg.msg_controllen = cmsg->cmsg_len;
 
     if (sendmsg(socket, &msg, 0) < 0) {
-        return false;
+        return -1;
     }
 
-    return true;
+    return 0;
 }

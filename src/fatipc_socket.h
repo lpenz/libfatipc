@@ -15,16 +15,20 @@
 /**
  * Receive a @ref FatipcBuffer from a socket
  * @param  socket Socket to read from
- * @return @ref FatipcBuffer pointer or NULL on error
+ * @param  buffer Buffer to use - must not have been allocated yet
+ * @return Returns 0 on success, or one of the following errors:
+ * - -1: error receiving fd (recvmsg);
+ * - -3: error while getting file size (fstat);
+ * - -4: error while mapping the file (mmap).
  */
-struct FatipcBuffer* fatipc_recv(int socket);
+int fatipc_recv(int socket, struct FatipcBuffer* buffer);
 
 /**
- * \brief  Send a @ref FatipcBuffer through a socket
- * \param  socket Socket to send to
- * \param  buffer @ref FatipcBuffer to send
- * \return true if success, false if error
+ * Send a @ref FatipcBuffer through a socket
+ * @param  socket Socket to send to
+ * @param  buffer @ref FatipcBuffer to send
+ * @return Returns 0 on success, or -1 on error (sendmsg).
  */
-bool fatipc_send(int socket, struct FatipcBuffer* buffer);
+int fatipc_send(int socket, struct FatipcBuffer* buffer);
 
 #endif /* _SRC_FATIPC_SOCKET_H_ */
