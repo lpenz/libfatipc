@@ -1,0 +1,18 @@
+# generic
+_*
+*.a
+
+# doxygen
+/html/
+/latex/
+
+# build
+/CMakeFiles/
+/CMakeCache.txt
+/Makefile
+/*.cmake
+
+# tests
+/Testing/
+/fatipc_test
+/googletest-prefix/

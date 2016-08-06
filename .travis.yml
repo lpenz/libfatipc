@@ -1,0 +1,18 @@
+# We us docker for better static analysis instead of the default environment.
+sudo: required # by docker
+services: docker
+env:
+  matrix:
+    - ACTION=doxygen
+    - ACTION=cppcheck
+    - ACTION=coverage
+    - ACTION=valgrind
+    - ACTION=clang
+    - ACTION=clang-analyse
+before_install:
+  - docker build -t ${PWD##*/} .
+language: c
+script:
+  - docker run -it --rm -v $PWD:/home/user/work -e MY_UID=$UID -e ACTION=$ACTION ${PWD##*/}
+after_success:
+  - if [ "$ACTION" = coverage ]; then bash <(curl -s https://codecov.io/bash); fi
