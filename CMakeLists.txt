@@ -20,7 +20,7 @@ include (ExternalProject)
 # Download and install GoogleTest
 ExternalProject_Add (
     googletest
-    URL https://googletest.googlecode.com/files/gtest-1.7.0.zip
+    URL https://github.com/google/googletest/archive/release-1.8.0.zip
     INSTALL_COMMAND ""
 )
 ExternalProject_Get_Property (googletest binary_dir source_dir)
