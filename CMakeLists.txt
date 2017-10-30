@@ -24,13 +24,13 @@ ExternalProject_Add (
     INSTALL_COMMAND ""
 )
 ExternalProject_Get_Property (googletest binary_dir source_dir)
-include_directories (${source_dir}/include)
+include_directories (${source_dir}/googletest/include)
 set (GTEST_LIBRARY gtest)
 add_library (${GTEST_LIBRARY} UNKNOWN IMPORTED)
-set_property (TARGET ${GTEST_LIBRARY} PROPERTY IMPORTED_LOCATION ${binary_dir}/${CMAKE_FIND_LIBRARY_PREFIXES}gtest.a)
+set_property (TARGET ${GTEST_LIBRARY} PROPERTY IMPORTED_LOCATION ${binary_dir}/googlemock/gtest/${CMAKE_FIND_LIBRARY_PREFIXES}gtest.a)
 set (GTEST_LIBRARY_MAIN gtest_main)
 add_library (${GTEST_LIBRARY_MAIN} UNKNOWN IMPORTED)
-set_property (TARGET ${GTEST_LIBRARY_MAIN} PROPERTY IMPORTED_LOCATION ${binary_dir}/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main.a)
+set_property (TARGET ${GTEST_LIBRARY_MAIN} PROPERTY IMPORTED_LOCATION ${binary_dir}/googlemock/gtest/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main.a)
 add_dependencies (${GTEST_LIBRARY} ${GTEST_LIBRARY_MAIN} googletest)
 
 # Compile tests
