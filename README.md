@@ -20,13 +20,13 @@ using a shared memory.
 
 ### No socket abstraction
 
-At this moment, this libraries provides no socket abstraction. We feel that
+At this moment, this library provides no socket abstraction. We feel that
 there is already enough documentation, socket tutorials and even libraries that
-do a great job providing the abstraction, and you can use any of them.
+do a great job providing that, and you can use any of them.
 You can take a look at
 http://stackoverflow.com/questions/118945/best-c-c-network-library for
 options. For instance, https://github.com/dermesser/libsocket looks really
-nice and is compatible with this library.
+nice and is compatible with libfatipc.
 
 
 ### Creating and sending a buffer
