@@ -21,9 +21,9 @@
  * On both cases, you have to use @ref fatipc_free do free the resources.
  */
 struct FatipcBuffer {
-    size_t size; //!< Buffer size
-    int fd; //!< Descriptor of the backing file
-    void* data; //!< Write/read the data here
+    size_t size;  //!< Buffer size
+    int fd;       //!< Descriptor of the backing file
+    void* data;   //!< Write/read the data here
 };
 
 /**

@@ -9,21 +9,20 @@
  * Use these functions when the socket is managed elsewhere.
  */
 
+#include "fatipc_socket.h"
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/mman.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <sys/mman.h>
 
-#include "fatipc_socket.h"
-
-int fatipc_recv(int socket, struct FatipcBuffer* buffer)
-{
+int fatipc_recv(int socket, struct FatipcBuffer* buffer) {
     /*
      * recv fd through socket, from
      * http://stackoverflow.com/questions/28003921/sending-file-descriptor-by-linux-socket
@@ -31,7 +30,7 @@ int fatipc_recv(int socket, struct FatipcBuffer* buffer)
     struct msghdr msg;
     memset(&msg, 0, sizeof msg);
     char m_buffer[256];
-    struct iovec io = {.iov_base = m_buffer, .iov_len = sizeof(m_buffer) };
+    struct iovec io = {.iov_base = m_buffer, .iov_len = sizeof(m_buffer)};
     msg.msg_iov = &io;
     msg.msg_iovlen = 1;
     char c_buffer[256];
@@ -69,8 +68,7 @@ int fatipc_recv(int socket, struct FatipcBuffer* buffer)
     return 0;
 }
 
-int fatipc_send(int socket, struct FatipcBuffer* buffer)
-{
+int fatipc_send(int socket, struct FatipcBuffer* buffer) {
     /*
      * send fd through socket, from
      * http://stackoverflow.com/questions/28003921/sending-file-descriptor-by-linux-socket
@@ -79,7 +77,7 @@ int fatipc_send(int socket, struct FatipcBuffer* buffer)
     memset(&msg, 0, sizeof msg);
     char buf[CMSG_SPACE(sizeof(buffer->fd))];
     memset(buf, '\0', sizeof(buf));
-    struct iovec io = {.iov_base = "ABC", .iov_len = 3 };
+    struct iovec io = {.iov_base = "ABC", .iov_len = 3};
     msg.msg_iov = &io;
     msg.msg_iovlen = 1;
     msg.msg_control = buf;

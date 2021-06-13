@@ -7,10 +7,9 @@
  * Tests for libfatipc
  */
 
-#include <sys/types.h>
-#include <sys/socket.h>
-
 #include <gtest/gtest.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 
 extern "C" {
 #include "fatipc_buffer.h"
@@ -20,8 +19,7 @@ extern "C" {
 /**
  * Test buffer allocation and deallocation
  */
-TEST(fatipc_basic, buffer_alloc)
-{
+TEST(fatipc_basic, buffer_alloc) {
     const int size = 500;
     struct FatipcBuffer b;
     ASSERT_EQ(fatipc_alloc(size, &b), 0);
@@ -33,8 +31,7 @@ TEST(fatipc_basic, buffer_alloc)
 /**
  * Test basic sending and receiving of buffers
  */
-TEST(fatipc_basic, socketpair)
-{
+TEST(fatipc_basic, socketpair) {
     const int size = 500;
     int sockets[2];
 

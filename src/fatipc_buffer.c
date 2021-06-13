@@ -7,16 +7,15 @@
  * The buffer structure and related functions
  */
 
+#include "fatipc_buffer.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include "fatipc_buffer.h"
-
-int fatipc_alloc(size_t size, struct FatipcBuffer* buffer)
-{
+int fatipc_alloc(size_t size, struct FatipcBuffer* buffer) {
     /* create tmp file for mmap */
     char template[] = "/tmp/sinkXXXXXX";
     int fd = mkstemp(template);
@@ -53,8 +52,7 @@ int fatipc_alloc(size_t size, struct FatipcBuffer* buffer)
     return 0;
 }
 
-void fatipc_free(struct FatipcBuffer* buffer)
-{
+void fatipc_free(struct FatipcBuffer* buffer) {
     munmap(buffer->data, buffer->size);
     close(buffer->fd);
     memset(buffer, 0, sizeof(*buffer));
