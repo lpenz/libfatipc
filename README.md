@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/lpenz/libfatipc.svg?branch=master)](https://travis-ci.org/lpenz/libfatipc)
-[![codecov](https://codecov.io/gh/lpenz/libfatipc/branch/master/graph/badge.svg)](https://codecov.io/gh/lpenz/libfatipc)
+[![CI](https://github.com/lpenz/libfatipc/actions/workflows/ci.yml/badge.svg)](https://github.com/lpenz/libfatipc/actions/workflows/ci.yml)
+[![coveralls](https://coveralls.io/repos/github/lpenz/libfatipc/badge.svg?branch=main)](https://coveralls.io/github/lpenz/libfatipc?branch=main)
 
 # libfatipc
 
