@@ -38,6 +38,20 @@ install (
   DESTINATION ${CMAKE_INSTALL_DOCDIR}/
   )
 
+# cpack deb
+
+set(CPACK_GENERATOR DEB)
+set(CPACK_PACKAGE_CONTACT "Leandro Lisboa Penz <lpenz@lpenz.org>")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
+    "C library that efficiently passes a big memory chunk between two processes")
+set(CPACK_DEBIAN_PACKAGE_SECTION libs)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+execute_process(COMMAND git describe --tags
+                OUTPUT_VARIABLE GIT_DESCRIBE)
+string(REGEX REPLACE "-g[0-9a-f]+\n$" "" CPACK_PACKAGE_VERSION "${GIT_DESCRIBE}")
+set(CPACK_PACKAGE_FILE_NAME "libfatipc-${CPACK_PACKAGE_VERSION}")
+include(CPack)
+
 # Tests
 
 find_package (Threads REQUIRED)
